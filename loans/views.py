@@ -43,7 +43,8 @@ from django.http import HttpResponse
 
 
 
-
+@authentication_classes([authentication.TokenAuthentication])
+@permission_classes([permissions.IsAuthenticated])
 class All_Loans(APIView):
     
     def get(self, request, format=None):
