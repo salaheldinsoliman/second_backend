@@ -28,7 +28,8 @@ class Loan (models.Model):
     is_taken = models.BooleanField(default=False)
     pmt= models.FloatField(default=0)
 
-
+    def __str__(self):
+        return str(self.user.username)
 
 
 class Ledger(models.Model):
