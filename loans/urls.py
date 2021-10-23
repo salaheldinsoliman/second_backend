@@ -6,7 +6,8 @@ from .views import All_Loans
 
 urlpatterns = [
     path('all_loans/', views.All_Loans.as_view()),
-    path('loan_create/', views.loan_create, name="loan_create")
+    path('loan_create/', views.loan_create, name="loan_create"),
+    path('ledger_create/', views.ledger_create, name="ledger_create")
 
 
 ]

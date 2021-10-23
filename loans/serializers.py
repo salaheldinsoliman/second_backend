@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Loan_Template, Loan, Loan_to_Loan_Fund
+from .models import Loan_Template, Loan, Loan_to_Loan_Fund, Ledger
 
 class LoanSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,3 +12,10 @@ class Loan_to_Loan_Fund_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Loan_to_Loan_Fund
         fields = ['loan']
+
+
+
+class LedgerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ledger
+        fields = ['amount', 'to_user']
