@@ -1,4 +1,4 @@
-from .models import Loan
+from .models import Loan, Ledger
 def create_loan_service(data,request):
     a=''
     print(data['amount'])
@@ -17,4 +17,9 @@ def create_loan_service(data,request):
         type=a,
         is_taken=flag,
         user=request.user)
+    
+
+
+   # user = User.get.objects(user=request.user)
+   # user.balance = balance + data['amount']
 

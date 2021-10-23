@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'djoser',
 
     'product',
-    'order'
+    'order',
+    'loans.apps.LoansAppConfig'
 ]
 
 CORS_ALLOWED_ORIGINS = [
