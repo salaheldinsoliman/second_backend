@@ -58,6 +58,10 @@ class Loan_to_Loan_Fund(models.Model):
         super().save(*args,**kwargs)
         if created:
             Ledger.objects.create(to_user=self.loan_col.user, from_user=self.loan_fund.user, amount= self.loan_col.amount)
+            diaa = UserProfile.objects.get(user=self.loan_col.user)
+            print(self.loan_col.amount)
+            diaa.balance = diaa.balance + self.loan_col.amount
+            diaa.save()
 
 
 
