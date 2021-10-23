@@ -1,6 +1,8 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -8,8 +10,17 @@ from django.contrib.auth.models import User
  #   type=models.CharField(primary_key=True, max_length=1)
 class UserProfile(models.Model):  
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    balance= models.FloatField()  
-    #other fields s
+    balance= models.FloatField() 
+"""
+@receiver(post_save, sender=User)
+def create_profile(sender,**kwargs ):
+    if kwargs['created']:
+        user_profile=UserProfile(user=kwargs['instance'])
+        user_profile.save()
+
+post_save.connect(create_profile, sender=User, dispatch_uid="create_profile")
+"""
+#post_save.connect(create_profile, sender=User)
 
 
 class Loan_Template (models.Model):
@@ -33,12 +44,20 @@ class Loan (models.Model):
 
 
 class Ledger(models.Model):
-    from_user= models.ForeignKey(UserProfile,related_name='loans' ,on_delete=models.CASCADE)
-    to_user=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
+    from_user= models.ForeignKey(User,related_name='loans_set1' ,on_delete=models.CASCADE)
+    to_user=models.ForeignKey(User, related_name='loans_set2', on_delete=models.CASCADE)
     amount=models.FloatField()
     
 
 
 class Loan_to_Loan_Fund(models.Model):
-    loan = models.ForeignKey(Loan, related_name='loans',on_delete=models.CASCADE)
+    loan_col = models.ForeignKey(Loan, related_name='loans',on_delete=models.CASCADE)
     loan_fund = models.ForeignKey(Loan, on_delete=models.CASCADE)
+    def save(self,*args,**kwargs):
+        created = not self.pk
+        super().save(*args,**kwargs)
+        if created:
+            Ledger.objects.create(to_user=self.loan_col.user, from_user=self.loan_fund.user, amount= self.loan_col.amount)
+
+
+
