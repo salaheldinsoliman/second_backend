@@ -32,8 +32,8 @@ from rest_framework import status, authentication, permissions
 
 
 
-from .serializers import LoanSerializer
-from .services import create_loan_service
+from .serializers import LoanSerializer, LedgerSerializer
+from .services import create_loan_service, create_ledger_service
 from .selectors import get_loans_selector
 import io
 from django.http import HttpResponse
@@ -64,6 +64,26 @@ def loan_create(request):
     if serializer.is_valid():
         create_loan_service(serializer.validated_data,request)
         #serializer.save(user=request.user)
+    return Response(serializer.data)
+
+   
+
+@api_view(['POST'])
+@authentication_classes([authentication.TokenAuthentication])
+@permission_classes([permissions.IsAuthenticated])
+def ledger_create(request):
+    tutorial_data = JSONParser().parse(request)
+    serializer = LedgerSerializer(data=tutorial_data)
+    print("before")
+    errors = []
+    if serializer.is_valid() or 1:
+        print("before")
+        serializer.errors
+        create_ledger_service(serializer.data,request)
+        #serializer.save(user=request.user)
+    else:
+        errors.append({"error": serializer.validated_data})
+    print(errors)
     return Response(serializer.data)
 
    
