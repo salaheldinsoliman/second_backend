@@ -8,6 +8,7 @@ from django.core import serializers
 import json
 from rest_framework import status
 from .buisness_logic import amortisation_schedule
+import json
 
 class myDataFrame:
     interest_rate = 0
@@ -45,9 +46,10 @@ def get_loans_selector(request):
             Instalement= df['Instalment'][i],
             Balance=df['Balance'][i]
     )  
-    am_table_rows_instance = Ammortization_Table_Row.objects.filter(am_table__user = request.user)
-
-    response = serializers.serialize('json', [am_table_rows_instance], ensure_ascii=False)
+    df_json= df.to_json(orient="split")
+    response= df_json
+    print(response)
+    #response = serializers.serialize('json', [loan1], ensure_ascii=False)
     return Response(response, status=status.HTTP_200_OK)
 
 def get_am_table_selector(request):
