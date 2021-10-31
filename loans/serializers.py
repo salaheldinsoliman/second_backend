@@ -21,6 +21,5 @@ class Loan_to_Loan_Fund_Serializer(serializers.ModelSerializer):
 class LedgerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ledger
-        fields = ['amount', 'to_user']
-
+        fields = ['amount', 'to_user', 'from_user']
 

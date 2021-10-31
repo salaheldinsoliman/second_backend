@@ -10,6 +10,7 @@ urlpatterns = [
     path('loan_create/', views.loan_create, name="loan_create"),
     path('ledger_create/', views.ledger_create, name="ledger_create"),
 
+    path('ledger/', views.ledger.as_view(), name="ledger"),
 #    path('number_view/', views.number_view.as_view(), name="number_view"), 
 
 

@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from djoser.signals import user_activated
 # Create your models here.
 
 #class Loan_Type (models.Model):
@@ -93,3 +94,11 @@ class Ammortization_Table_Row(models.Model):
     Interests= models.ListField()
     Instalements= models.ListField()
     Balances=models.ListField()"""
+
+
+@receiver(user_activated)
+def my_handler(user, request, **kwargs):
+    user = request.user
+    print(request.user.username)
+    up = UserProfile.objects.create(user=user, balance=0)
+    up.save()

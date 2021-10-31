@@ -42,9 +42,12 @@ import io
 from django.http import HttpResponse
 
 
-
-
-
+@authentication_classes([authentication.TokenAuthentication])
+@permission_classes([permissions.IsAuthenticated])
+class ledger(APIView):
+    def get(self, request):
+        response=selectors.get_ledger(request)
+        return response
 
 
 

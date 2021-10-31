@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 def create_loan_service(data,request):
     a=''
-    print(data['amount'])
+    print(data['amount']) 
     if (data['amount']<19999):
         a='A'
     if (data['amount']<29999 and data['amount']>20000):
