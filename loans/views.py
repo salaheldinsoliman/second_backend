@@ -5,7 +5,7 @@ from rest_framework.response import Response
 import json
 from django.http.response import HttpResponse
 from django.shortcuts import render
-from rest_framework import serializers
+from rest_framework import serializers,views
 from rest_framework.serializers import Serializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
@@ -16,7 +16,7 @@ from django.http import JsonResponse
 
 
 
-import stripe
+
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -34,12 +34,35 @@ from rest_framework import status, authentication, permissions
 
 from .serializers import LoanSerializer, LedgerSerializer
 from .services import create_loan_service, create_ledger_service
-from .selectors import get_loans_selector
+from .selectors import get_loans_selector, get_am_table_selector
 import io
 from django.http import HttpResponse
 
 
 # Create your views here.
+
+"""class number_view (views.APIView):
+    def get(self,request):
+        yourdata= [{"likes": 10}]
+        
+        results = dfSerializer(data=yourdata, many=True)
+        results.is_valid()
+        return Response(results.data)"""
+
+
+
+
+
+@authentication_classes([authentication.TokenAuthentication])
+@permission_classes([permissions.IsAuthenticated])
+class Amortization_table(APIView):
+    def get(self, request, format=None):
+        print("getgogogogogo")
+        response = get_am_table_selector(request)
+        return response
+
+
+
 
 
 
