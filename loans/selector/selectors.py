@@ -1,13 +1,13 @@
 from django.http import request
-from .models import Loan, Loan_Template, Loan_to_Loan_Fund,payments, Ammortization_Table_Row, Ammortization_Table
+from ..models import Loan, Loan_Template, Loan_to_Loan_Fund
 from rest_framework.response import Response
-from .serializers import LoanSerializer,Loan_to_Loan_Fund_Serializer
+from ..serializers import LoanSerializer,Loan_to_Loan_Fund_Serializer
 import numpy as np
 import pandas as pd
 from django.core import serializers
 import json
 from rest_framework import status
-from .buisness_logic import amortisation_schedule
+from ..buisness_logic import amortisation_schedule
 import json
 
 
