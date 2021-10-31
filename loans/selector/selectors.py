@@ -1,13 +1,13 @@
 from django.http import request
-from .models import Loan, Loan_Template, Loan_to_Loan_Fund,payments, Ammortization_Table_Row, Ammortization_Table
+from ..models import Ledger, Loan, Loan_Template, Loan_to_Loan_Fund
 from rest_framework.response import Response
-from .serializers import LoanSerializer,Loan_to_Loan_Fund_Serializer
+from ..serializers import LoanSerializer,Loan_to_Loan_Fund_Serializer
 import numpy as np
 import pandas as pd
 from django.core import serializers
 import json
 from rest_framework import status
-from .buisness_logic import amortisation_schedule
+from ..buisness_logic import amortisation_schedule
 import json
 
 
@@ -27,3 +27,9 @@ def get_loans_selector(request):
     #response = serializers.serialize('json', [loan1], ensure_ascii=False)
     return Response(response, status=status.HTTP_200_OK)
 
+def get_ledger(request):
+    ledger_objects_to = Ledger.objects.get(to_user=request.user)
+    ledger_objects_from = Ledger.objects.get(from_user=request.user)
+    all_ledger_objects = ledger_objects_to | ledger_objects_from
+    response = serializers.serialize('json', [all_ledger_objects], ensure_ascii=False)
+    return Response(response, status=status.HTTP_200_OK)

@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from djoser.signals import user_activated
 # Create your models here.
 
 #class Loan_Type (models.Model):
@@ -68,7 +69,7 @@ class Loan_to_Loan_Fund(models.Model):
 
 
 
-class payments(models.Model):
+"""class payments(models.Model):
     Installment_amount= models.FloatField()
     number_pays= models.IntegerField()
 
@@ -76,7 +77,7 @@ class payments(models.Model):
 
 class Ammortization_Table(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-
+    
 
 class Ammortization_Table_Row(models.Model):
     am_table = models.ForeignKey(Ammortization_Table,on_delete=models.CASCADE, null=True, blank=True)
@@ -87,9 +88,17 @@ class Ammortization_Table_Row(models.Model):
 
 
 
-"""class Ammortization_Table_Row(models.Model):
+class Ammortization_Table_Row(models.Model):
    # am_table = models.ForeignKey(Ammortization_Table,on_delete=models.CASCADE, null=True, blank=True)
     Principals= models.ArrayModelField()
     Interests= models.ListField()
     Instalements= models.ListField()
     Balances=models.ListField()"""
+
+
+@receiver(user_activated)
+def my_handler(user, request, **kwargs):
+    user = request.user
+    print(request.user.username)
+    up = UserProfile.objects.create(user=user, balance=0)
+    up.save()

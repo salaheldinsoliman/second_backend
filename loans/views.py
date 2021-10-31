@@ -33,36 +33,21 @@ from rest_framework import status, authentication, permissions
 
 
 from .serializers import LoanSerializer, LedgerSerializer
-from .services import create_loan_service, create_ledger_service
-from .selectors import get_loans_selector, get_am_table_selector
+from .services import create_ledger_service, create_loan_service
+# create_loan_service, create_ledger_service
+from .selector import selectors
+from .service import create_ledger,create_loan
+
 import io
 from django.http import HttpResponse
 
 
-# Create your views here.
-
-"""class number_view (views.APIView):
-    def get(self,request):
-        yourdata= [{"likes": 10}]
-        
-        results = dfSerializer(data=yourdata, many=True)
-        results.is_valid()
-        return Response(results.data)"""
-
-
-
-
-
 @authentication_classes([authentication.TokenAuthentication])
 @permission_classes([permissions.IsAuthenticated])
-class Amortization_table(APIView):
-    def get(self, request, format=None):
-        print("getgogogogogo")
-        response = get_am_table_selector(request)
+class ledger(APIView):
+    def get(self, request):
+        response=selectors.get_ledger(request)
         return response
-
-
-
 
 
 
@@ -71,7 +56,7 @@ class Amortization_table(APIView):
 class All_Loans(APIView):
     
     def get(self, request, format=None):
-        response=get_loans_selector(request)
+        response=selectors.get_loans_selector(request)
         return response
 
 
