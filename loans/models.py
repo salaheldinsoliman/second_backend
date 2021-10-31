@@ -68,3 +68,20 @@ class Loan_to_Loan_Fund(models.Model):
 
 
 
+class payments(models.Model):
+    Installment_amount= models.FloatField()
+    number_pays= models.IntegerField()
+
+
+
+class Ammortization_Table(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+
+
+class Ammortization_Table_Row(models.Model):
+    am_table = models.ForeignKey(Ammortization_Table,on_delete=models.CASCADE, null=True, blank=True)
+    Principal= models.FloatField()
+    Interest= models.FloatField()
+    Instalement= models.FloatField()
+    Balance=models.FloatField()
+
