@@ -85,3 +85,11 @@ class Ammortization_Table_Row(models.Model):
     Instalement= models.FloatField()
     Balance=models.FloatField()
 
+
+
+"""class Ammortization_Table_Row(models.Model):
+   # am_table = models.ForeignKey(Ammortization_Table,on_delete=models.CASCADE, null=True, blank=True)
+    Principals= models.ArrayModelField()
+    Interests= models.ListField()
+    Instalements= models.ListField()
+    Balances=models.ListField()"""
