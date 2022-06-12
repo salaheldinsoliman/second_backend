@@ -11,7 +11,7 @@ from ..buisness_logic import amortisation_schedule
 import json
 
 
-
+#Get called when the user presses on Get Amortization Table Button
 def get_loans_selector(request):
     loan1 = Loan_to_Loan_Fund.objects.get(loan_col__user= request.user)
     amount= loan1.loan_col.amount
